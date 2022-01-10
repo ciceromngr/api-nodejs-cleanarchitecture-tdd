@@ -1,0 +1,8 @@
+{
+  "name": "api-nodejs-cleanarchitecture-tdd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ciceromngr/api-nodejs-cleanarchitecture-tdd.git",
+  "author": "Cicero Romao <cicerotransformice@gmail.com>",
+  "license": "MIT"
+}
