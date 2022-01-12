@@ -6,6 +6,7 @@ class AuthUseCaseSpy {
     auth(email, password) {
         this.email = email
         this.password = password
+        return this.acessToken
     }
 }
 
@@ -67,6 +68,20 @@ describe('Login Router', () => {
         sut.route(httpRequest)
         expect(authUseCaseSpy.email).toBe(httpRequest.body.email)
         expect(authUseCaseSpy.password).toBe(httpRequest.body.password)
+    })
+
+    it('should return 401 when invalid credentials are provided', () => {
+        const { sut, authUseCaseSpy } = makeSut()
+        authUseCaseSpy.acessToken = null
+        const httpRequest = {
+            body: {
+                email: 'invalid_email@mail.com',
+                password: 'invalid_password'
+            }
+        }
+        const httpResponse = sut.route(httpRequest)
+        expect(httpResponse.statusCode).toBe(401)
+        expect(httpResponse.body).toEqual(new UnauthorizedError())
     })
 
     it('should return 500 if AuthUseCase has no auth method ', () => {

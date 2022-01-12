@@ -20,8 +20,13 @@ module.exports = class LoginRouter {
             return HttpResponse.badRequest('Password')
         }
 
-        this.authUseCase.auth(email, password)
+        const acessToken = this.authUseCase.auth(email, password)
+        if (!acessToken) {
+            return HttpResponse.unauthorizedError()
+        }
 
-        return HttpResponse.unauthorizedError()
+        return {
+            statusCode: 200
+        }
     }
 }
