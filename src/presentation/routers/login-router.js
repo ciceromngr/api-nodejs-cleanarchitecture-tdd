@@ -4,7 +4,7 @@ module.exports = class LoginRouter {
     constructor(authUseCase) {
         this.authUseCase = authUseCase
     }
-    route(httpRequest) {
+    async route(httpRequest) {
 
         try {
             const { email, password } = httpRequest.body
@@ -17,7 +17,7 @@ module.exports = class LoginRouter {
                 return HttpResponse.badRequest('Password')
             }
 
-            const acessToken = this.authUseCase.auth(email, password)
+            const acessToken = await this.authUseCase.auth(email, password)
             if (!acessToken) {
                 return HttpResponse.unauthorizedError()
             }
