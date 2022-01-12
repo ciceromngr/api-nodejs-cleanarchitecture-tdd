@@ -12,6 +12,7 @@ class AuthUseCaseSpy {
 
 const makeSut = () => {
     const authUseCaseSpy = new AuthUseCaseSpy()
+    authUseCaseSpy.acessToken = 'valid_token'
     const sut = new LoginRouter(authUseCaseSpy)
     return {
         sut,
@@ -85,8 +86,7 @@ describe('Login Router', () => {
     })
 
     it('should return 200 when valid credentials are provided', () => {
-        const { sut, authUseCaseSpy } = makeSut()
-        authUseCaseSpy.acessToken = 'valid_token'
+        const { sut } = makeSut()
         const httpRequest = {
             body: {
                 email: 'valid_email@mail.com',
