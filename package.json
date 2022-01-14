@@ -9,6 +9,6 @@
         "jest": "^27.4.7"
     },
     "scripts": {
-        "test": "jest --watchAll"
+        "test": "jest --watch --silent --noStackTrace"
     }
 }
