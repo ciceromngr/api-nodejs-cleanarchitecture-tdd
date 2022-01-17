@@ -10,5 +10,8 @@
     },
     "scripts": {
         "test": "jest --watch --silent --noStackTrace"
+    },
+    "dependencies": {
+        "validator": "^13.7.0"
     }
 }
