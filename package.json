@@ -9,7 +9,7 @@
         "jest": "^27.4.7"
     },
     "scripts": {
-        "test": "jest --watch --silent --noStackTrace"
+        "test": "jest --watch --noStackTrace"
     },
     "dependencies": {
         "validator": "^13.7.0"
