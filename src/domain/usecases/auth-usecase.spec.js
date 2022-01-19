@@ -11,15 +11,21 @@ class AuthUseCase {
     }
 }
 
+const makeSut = () => {
+    const sut = new AuthUseCase()
+
+    return { sut }
+}
+
 describe('Auth UseCase', () => {
     it('should thorws if no email to provided', () => {
-        const sut = new AuthUseCase()
+        const { sut } = makeSut()
         const promisse = sut.auth()
         expect(promisse).rejects.toThrow(new MissingParamError('email'))
     })
 
     it('should thorws if no password to provided', () => {
-        const sut = new AuthUseCase()
+        const { sut } = makeSut()
         const promisse = sut.auth('any_email@mail.com')
         expect(promisse).rejects.toThrow(new MissingParamError('password'))
     })
