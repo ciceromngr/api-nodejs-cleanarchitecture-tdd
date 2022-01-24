@@ -30,6 +30,7 @@ module.exports = class AuthUseCase {
             return null
         }
 
-        await this.tokenGenerator.generator(user.id)
+        const acessToken = await this.tokenGenerator.generator(user.id)
+        return acessToken
     }
 }
