@@ -21,16 +21,13 @@ module.exports = class AuthUseCase {
         }
 
         const user = await this.loadUserByEmailRepository.load(email)
+        const isvalid = user && await this.encrypter.compare(password, user.password)
 
-        if (!user) {
-            return null
-        }
-        const isvalid = await this.encrypter.compare(password, user.password)
-        if (!isvalid) {
-            return null
+        if (isvalid) {
+            const acessToken = await this.tokenGenerator.generator(user.id)
+            return acessToken
         }
 
-        const acessToken = await this.tokenGenerator.generator(user.id)
-        return acessToken
+        return null
     }
 }
