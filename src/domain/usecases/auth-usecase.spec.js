@@ -50,7 +50,11 @@ const makeSut = () => {
     const encrypterSpy = makeEncrypter()
     const tokenGeneratorSpy = makeTokenGenerator()
     const loadUserByEmailRepositorySpy = makeLoadUserByEmailRepository()
-    const sut = new AuthUseCase(loadUserByEmailRepositorySpy, encrypterSpy, tokenGeneratorSpy)
+    const sut = new AuthUseCase({
+        loadUserByEmailRepository: loadUserByEmailRepositorySpy,
+        encrypter: encrypterSpy,
+        tokenGenerator: tokenGeneratorSpy
+    })
 
     return { sut, loadUserByEmailRepositorySpy, encrypterSpy, tokenGeneratorSpy }
 }
@@ -75,13 +79,13 @@ describe('Auth UseCase', () => {
     })
 
     it('should throw if no LoadUserByEmailRepository is provided', () => {
-        const sut = new AuthUseCase()
+        const sut = new AuthUseCase({})
         const promisse = sut.auth('any_email@mail.com', 'any_password')
         expect(promisse).rejects.toThrow(new MissingParamError('loadUserByEmailRepository'))
     })
 
     it('should throw if LoadUserByEmailRepository has no load method', () => {
-        const sut = new AuthUseCase({})
+        const sut = new AuthUseCase({ loadUserByEmailRepository: {} })
         const promisse = sut.auth('any_email@mail.com', 'any_password')
         expect(promisse).rejects.toThrow(new InvalidParamError('loadUserByEmailRepository'))
     })
