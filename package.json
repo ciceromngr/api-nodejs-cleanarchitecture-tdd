@@ -12,6 +12,7 @@
         "test": "jest --watch --silent --noStackTrace --coverage=false"
     },
     "dependencies": {
+        "bcrypt": "^5.0.1",
         "validator": "^13.7.0"
     }
 }
