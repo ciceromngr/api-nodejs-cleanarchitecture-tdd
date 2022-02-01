@@ -6,6 +6,7 @@
     "author": "Cicero Romao <cicerotransformice@gmail.com>",
     "license": "MIT",
     "devDependencies": {
+        "@shelf/jest-mongodb": "^2.2.0",
         "jest": "^27.4.7"
     },
     "scripts": {
