@@ -1,7 +1,7 @@
 {
     "name": "api-nodejs-cleanarchitecture-tdd",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "src/main/index.js",
     "repository": "https://github.com/ciceromngr/api-nodejs-cleanarchitecture-tdd.git",
     "author": "Cicero Romao <cicerotransformice@gmail.com>",
     "license": "MIT",
@@ -10,11 +10,13 @@
         "jest": "^27.4.7"
     },
     "scripts": {
+        "start": "node src/main/index.js",
         "test": "jest --watch --coverage=false",
         "test:unit": "jest --watchAll"
     },
     "dependencies": {
         "bcrypt": "^5.0.1",
+        "express": "^4.17.2",
         "jsonwebtoken": "^8.5.1",
         "mongodb": "^4.3.1",
         "validator": "^13.7.0"
