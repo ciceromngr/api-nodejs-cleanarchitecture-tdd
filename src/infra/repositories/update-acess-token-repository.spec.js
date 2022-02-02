@@ -1,3 +1,4 @@
+const { MissingParamError } = require('../../utils/errors')
 const MongoHelper = require('../helpers/mongo-helper')
 let db
 
@@ -6,6 +7,8 @@ class UpdateAcessTokenRepository {
         this.userModel = userModel
     }
     async update(userId, acessToken) {
+        if (!userId) throw new MissingParamError('userId')
+        if (!acessToken) throw new MissingParamError('acessToken')
         await this.userModel.updateOne({
             _id: userId
         }, {
@@ -39,27 +42,39 @@ describe('UpdateAcessToken Repository', () => {
 
     it('should update the user with the given acessToken', async() => {
         const { sut, userModel } = makeSut()
-        const fakeUser = await userModel.insertOne({
+        const fakeUserId = await userModel.insertOne({
             email: 'valid_email@mail.com',
             password: 'valid_password'
         }).then(result => {
             return result.insertedId
         })
-        await sut.update(fakeUser, 'valid_acessToken')
-        const updatedFakeUser = await userModel.findOne({ _id: fakeUser })
+        await sut.update(fakeUserId, 'valid_acessToken')
+        const updatedFakeUser = await userModel.findOne({ _id: fakeUserId })
         expect(updatedFakeUser.acessToken).toBe('valid_acessToken')
     })
 
     it('should throw if no userModel is provider', async() => {
         const { sut, userModel } = makeSut()
         sut.userModel = null
-        const fakeUser = await userModel.insertOne({
+        const fakerUserId = await userModel.insertOne({
             email: 'valid_email@mail.com',
             password: 'valid_password'
         }).then(result => {
             return result.insertedId
         })
-        const promise = sut.update(fakeUser, 'valid_acessToken')
+        const promise = sut.update(fakerUserId, 'valid_acessToken')
         expect(promise).rejects.toThrow()
+    })
+
+    it('should throw if no params are provider', async() => {
+        const { sut, userModel } = makeSut()
+        const fakerUserId = await userModel.insertOne({
+            email: 'valid_email@mail.com',
+            password: 'valid_password'
+        }).then(result => {
+            return result.insertedId
+        })
+        expect(sut.update()).rejects.toThrow(new MissingParamError('userId'))
+        expect(sut.update(fakerUserId)).rejects.toThrow(new MissingParamError('acessToken'))
     })
 })
