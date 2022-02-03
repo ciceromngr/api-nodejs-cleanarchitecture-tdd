@@ -13,7 +13,7 @@
     "scripts": {
         "start": "node src/main/index.js",
         "test": "jest --watch --coverage=false",
-        "test:unit": "jest --watchAll"
+        "test:all": "jest --watchAll --runInBand"
     },
     "dependencies": {
         "bcrypt": "^5.0.1",
