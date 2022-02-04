@@ -8,15 +8,15 @@ const makeSut = () => {
 }
 
 describe('LoadUserByEmail Repository', () => {
-    let db
+    let userModel
 
     beforeAll(async() => {
         await MongoHelper.connect(process.env.MONGO_URL)
-        db = await MongoHelper.getDb()
+        userModel = await MongoHelper.getCollection('users')
     });
 
     beforeEach(async() => {
-        await db.collection('users').deleteMany();
+        await userModel.deleteMany();
     });
 
     afterAll(async() => {
@@ -31,7 +31,7 @@ describe('LoadUserByEmail Repository', () => {
 
     it('should return an user if user is found', async() => {
         const { sut } = makeSut()
-        await db.collection('users').insertOne({ email: 'valid_email@mail.com' });
+        await userModel.insertOne({ email: 'valid_email@mail.com' });
         const user = await sut.load('valid_email@mail.com')
         expect(user.email).toBe('valid_email@mail.com')
     })
