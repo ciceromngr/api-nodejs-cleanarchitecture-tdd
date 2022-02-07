@@ -1,3 +1,12 @@
+jest.mock('jsonwebtoken', () => ({
+    token: 'any_token',
+    sign(id, secret) {
+        this.id = id
+        this.secret = secret
+        return this.token
+    }
+}))
+
 const jwt = require('jsonwebtoken')
 const MissingParamError = require('../errors/missing-param-erros')
 const TokenGenerator = require('./token-generator')
@@ -24,7 +33,7 @@ describe('TokenGenerator', () => {
     it('should call JWT with correct values', async() => {
         const { sut } = makeSut()
         await sut.generator('any_id')
-        expect(jwt.id).toBe('any_id')
+        expect(jwt.id).toEqual({ "_id": "any_id" })
         expect(jwt.secret).toBe(sut.secret)
     })
 
